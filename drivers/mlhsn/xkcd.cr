@@ -1,16 +1,5 @@
 require "placeos-driver"
 
-# class Mlhsn::Joke
-#   getter! :alt
-#   getter! :img
-#   getter! :title
-
-#   def from_json(j_obj : String)
-#     h_obj = Hash(String, String).from_json(JSON.parse(j_obj))
-#     @alt, @img, @title = h_obj["alt"], h_obj["img"], h_obj["title"]
-#   end
-# end
-
 class Mlhsn::Xkcd < PlaceOS::Driver
     generic_name :Driver
 
@@ -22,7 +11,6 @@ class Mlhsn::Xkcd < PlaceOS::Driver
 
     default_settings({
       default_slug: "/info.0.json",
-      # params_slug: "/{id}/info.0.json",
     })
 
 
@@ -36,14 +24,12 @@ class Mlhsn::Xkcd < PlaceOS::Driver
     def get_joke(slug : String) : String
       response = get(slug, headers: {
         "Content-Type" => "application/json",
-        "Accept"       => "application/json",
       })
 
-      raise "request failed with #{response.status_code}\n#{response.body}" unless response.success?
+      return "![failed](#{response.status_code})" unless response.success?
 
-    #   puts response.body
-      response.body
+      body_json = JSON.parse response.body
 
-      # Mlhsn::Joke.new
+      "![#{body_json["safe_title"]}](#{body_json["img"]})"
     end
 end

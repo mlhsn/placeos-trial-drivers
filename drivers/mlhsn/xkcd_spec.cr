@@ -6,25 +6,15 @@ DriverSpecs.mock_driver "Mlhsn::Xkcd" do
     slug: "/info.0.json",
   )
 
-  p! retval
-  p! retval.get
+  expect_http_request do |request, response|
+    if (/(\/[0-9]+\/)/ =~ request.url).nil?
+      response.status_code = 200
+      response << "{\"month\": \"2\", \"num\": 2732, \"link\": \"\", \"year\": \"2023\", \"news\": \"\", \"safe_title\": \"Bursa of Fabricius\", \"transcript\": \"\", \"alt\": \"If an anatomical structure is named for a person, it means they were the only person to have it. Pierre Paul Broca had a special area of his brain that created powerful magnetic fields, enabling him to do 19th century fMRI research.\", \"img\": \"https://imgs.xkcd.com/comics/bursa_of_fabricius.png\", \"title\": \"Bursa of Fabricius\", \"day\": \"1\"}"
+    else
+      response.status_code = 404
+      response << "{}"
+    end
+  end
 
-  # retval = exec(:get_joke,
-  #   slug: "joke",
-  # )
-
-  # sms should send a HTTP request
-#   expect_http_request do |request, response|
-#     params = request.query_params
-#     if {params["Action"], params["PhoneNumber"], params["Message"]} == {"Publish", "61418419954", "hello steve"}
-#       response.status_code = 200
-#       response << "{\"PublishResponse\":{\"PublishResult\":{\"MessageId\":\"0b486c18-fa23-5f82-a5a0-35200c5f3d96\",\"SequenceNumber\":null},\"ResponseMetadata\":{\"RequestId\":\"6710f384-1a8a-56e3-8b63-aabcecf664f7\"}}}"
-#     else
-#       response.status_code = 400
-#       response << "{}"
-#     end
-#   end
-
-  # What the sms function should return
-  # retval.get.should eq "Here is a joke"
+  retval.get.should_not.starts_with?("![failed]")
 end
