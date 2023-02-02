@@ -2,6 +2,10 @@ name: private-drivers
 version: 1.3.0
 crystal: ~> 1
 
+# targets:
+#   xkcdjoke:
+#     main: src/mlhsn/xkcd_trial.cr
+
 # Add your driver dependencies here.
 dependencies:
   # Required for compiling and testing PlaceOS drivers
