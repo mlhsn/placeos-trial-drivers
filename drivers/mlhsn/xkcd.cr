@@ -13,7 +13,6 @@ class Mlhsn::Xkcd < PlaceOS::Driver
       default_slug: "/info.0.json",
     })
 
-
     def on_load
       on_update
     end

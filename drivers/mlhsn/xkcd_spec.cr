@@ -16,5 +16,5 @@ DriverSpecs.mock_driver "Mlhsn::Xkcd" do
     end
   end
 
-  retval.get.should_not.starts_with?("![failed]")
+  retval.get.should_not contain("![failed]")
 end
