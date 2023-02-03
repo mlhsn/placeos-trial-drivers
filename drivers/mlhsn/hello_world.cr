@@ -17,6 +17,10 @@ class Mlhsn::HelloWorld < PlaceOS::Driver
     end
 
     def greet(name : String? = nil) : String
-      "Hello #{setting?(String, :who) unless name.nil?}!"
+      if name
+        "Hello #{name}!"
+      else
+        "Hello #{setting?(String, :who)}!"
+      end
     end
 end
